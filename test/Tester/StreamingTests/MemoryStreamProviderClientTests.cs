@@ -8,7 +8,7 @@ using Orleans.Providers.Streams.Generator;
 using Orleans.Runtime;
 using Orleans.Runtime.Configuration;
 using Orleans.TestingHost;
-using TestExtensions;
+using UnitTests.Tester;
 using Xunit;
 using Xunit.Abstractions;
 

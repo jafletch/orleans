@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Orleans.Runtime;
 using Orleans.TestingHost;
-using TestExtensions;
 using UnitTests.GrainInterfaces;
+using UnitTests.Tester;
 using Xunit;
 using Orleans;
 using Orleans.Runtime.Configuration;
@@ -54,7 +54,7 @@ namespace Tester.Forwarding
             {
                 var grain = HostedCluster.GrainFactory.GetGrain<ILongRunningTaskGrain<T>>(Guid.NewGuid());
                 var instanceId = await grain.GetRuntimeInstanceId();
-                if (instanceId.Contains(HostedCluster.SecondarySilos[0].SiloAddress.Endpoint.ToString()))
+                if (instanceId.Contains(HostedCluster.SecondarySilos[0].Endpoint.ToString()))
                 {
                     return grain;
                 }

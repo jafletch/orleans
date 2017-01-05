@@ -11,9 +11,9 @@ using Orleans.Runtime.Configuration;
 using Orleans.TestingHost;
 
 using Tester;
-using TestExtensions;
 using UnitTests.GrainInterfaces;
 using UnitTests.Grains;
+using UnitTests.Tester;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -84,7 +84,7 @@ namespace UnitTests
                     Assert.True(false, string.Format("Unexpected exception {0}: {1}", exc.Message, exc.StackTrace));
                 }
             }
-            if (this.hostedCluster.ClusterConfiguration.Globals.PerformDeadlockDetection)
+            if (this.hostedCluster.Primary.Silo.GlobalConfig.PerformDeadlockDetection)
             {
                 Assert.True(deadlock, "Non-reentrant grain should deadlock");
             }
@@ -238,7 +238,7 @@ namespace UnitTests
                     Assert.True(false, $"Unexpected exception {exc.Message}: {exc.StackTrace}");
                 }
             }
-            if (this.hostedCluster.ClusterConfiguration.Globals.PerformDeadlockDetection)
+            if (this.hostedCluster.Primary.Silo.GlobalConfig.PerformDeadlockDetection)
             {
                 Assert.True(deadlock, "Non-reentrant grain should deadlock");
             }

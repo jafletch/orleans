@@ -36,7 +36,7 @@ namespace Orleans.Runtime
             GrainClass = TypeUtils.GetFullName(typeInfo);
             RemoteInterfaceTypes = GetRemoteInterfaces(type); ;
             StateObjectType = stateObjectType;
-            MayInterleave = GetMayInterleavePredicate(typeInfo) ?? (_ => false);
+            MayInterleave = GetMayInterleavePredicate(type) ?? (_ => false);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Orleans.Runtime
         }
 
 #pragma warning disable 612,618
-        internal static PlacementStrategy GetPlacementStrategy(Type grainClass, PlacementStrategy defaultPlacement)
+        internal static PlacementStrategy GetPlacementStrategy(Type grainClass)
         {
             PlacementStrategy placement;
 
@@ -110,7 +110,7 @@ namespace Orleans.Runtime
                 return placement;
             }
 
-            return defaultPlacement;
+            return PlacementStrategy.GetDefault();
         }
 
         internal static MultiClusterRegistrationStrategy GetMultiClusterRegistrationStrategy(Type grainClass)
@@ -137,7 +137,7 @@ namespace Orleans.Runtime
         /// </summary>
         /// <param name="grainType">Grain class.</param>
         /// <returns></returns>
-        private static Func<InvokeMethodRequest, bool> GetMayInterleavePredicate(TypeInfo grainType)
+        private static Func<InvokeMethodRequest, bool> GetMayInterleavePredicate(Type grainType)
         {
             if (!grainType.GetCustomAttributes<MayInterleaveAttribute>().Any())
                 return null;
